@@ -25,7 +25,9 @@ export default {
     };
   },
   mounted() {},
-  methods: {}
+  methods: {
+
+  }
 };
 </script>
 
