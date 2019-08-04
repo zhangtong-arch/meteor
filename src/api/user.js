@@ -3,14 +3,21 @@ let http = axios.create({
     baseURL: "http://localhost:3000",
 })
 class user {
-    static save (item) {
-       return http.post('/users/login',item).then(response => response)
+    static create (parma) {
+       return http.post('/users/create',parma).then(response => response)
     }
-    static getInfo () {
-        return http.get('/users/findAll').then(response => response)
+    static getUesrAll () {
+        return http.get('/users/getUesrAll').then(response => response)
     }
-    static getReadFile () {
-        return http.get('/users/getFileInfo').then(response => response)
+    static deleteUserById (parma) {
+        return http.get('/users/deleteUserById', {
+            params: {
+                id: parma
+            }
+        }).then(response => response)
+    }
+    static updataUserById (parma) {
+        return http.post('/users/updataUserById',parma).then(response => response)
     }
 }
-export {user}
+export { user }

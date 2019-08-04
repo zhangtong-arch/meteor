@@ -16,9 +16,11 @@
     <el-row>
       <el-col :span="24">
         <el-table :data="tableData" :max-height="clientHeight" border style="width: 100%">
-          <el-table-column prop="date" label="日期" width="180"></el-table-column>
           <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-          <el-table-column prop="address" label="地址"></el-table-column>
+          <el-table-column prop="gender" label="性别" width="180"></el-table-column>
+          <el-table-column prop="isWed" label="婚否" width="180"></el-table-column>
+          <el-table-column prop="address" label="住址"></el-table-column>
+          <el-table-column prop="hobby" label="爱好"></el-table-column>
           <el-table-column label="其他" width="150">
             <template slot-scope="scope">
               <el-button @click="handleUpadata(scope.row)" size="mini">修改</el-button>
@@ -39,12 +41,13 @@
         ></el-pagination>
       </el-col>
     </el-row>
-    <addUserDialog ref="diaLog" title="新增用户"></addUserDialog>
+    <addUserDialog ref="diaLog" :title="title" @getUser="getUser" :info="info"></addUserDialog>
   </div>
 </template>
 
 <script>
 import addUserDialog from "../../components/addUserDialog";
+import { user } from "../../api/user";
 export default {
   components: {
     addUserDialog
@@ -139,7 +142,9 @@ export default {
           address: "上海市普陀区金沙江路 1516 弄"
         }
       ],
-      currentPage4: 1
+      currentPage4: 1,
+      title: "",
+      info: {}
     };
   },
   computed: {
@@ -147,10 +152,46 @@ export default {
       return `${document.documentElement.clientHeight - 290}px`;
     }
   },
-  mounted() {},
+  mounted() {
+    this.getUserAll();
+  },
   methods: {
+    getUserAll() {
+      let that = this;
+      user.getUesrAll().then(res => {
+        that.tableData = res.data.data;
+      });
+    },
+    getUser() {
+      this.getUserAll();
+    },
     add() {
+      this.title = "新增用户";
       this.$refs["diaLog"].dialogVisible = true;
+      this.info = {
+        name: "",
+        gender: "",
+        isWed: "",
+        address: "",
+        hobby: "",
+        id: ""
+      };
+    },
+    // 修改用户信息
+    handleUpadata(item) {
+      this.$refs["diaLog"].dialogVisible = true;
+      this.title = "修改用户信息";
+      this.info = item;
+    },
+    // 删除用户
+    handleDelete(item) {
+      user.deleteUserById(item.id).then(res => {
+        this.getUserAll();
+        this.$message({
+          message: '删除成功',
+          type: 'success'
+        });
+      })
     },
     handlerSearch(val) {
       debugger;
