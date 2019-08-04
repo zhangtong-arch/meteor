@@ -19,6 +19,12 @@
           <el-table-column prop="date" label="日期" width="180"></el-table-column>
           <el-table-column prop="name" label="姓名" width="180"></el-table-column>
           <el-table-column prop="address" label="地址"></el-table-column>
+          <el-table-column label="其他" width="150">
+            <template slot-scope="scope">
+              <el-button @click="handleUpadata(scope.row)" size="mini">修改</el-button>
+              <el-button @click="handleDelete(scope.row)" size="mini" type="danger">删除</el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
       <el-col :span="24">
@@ -38,9 +44,9 @@
 </template>
 
 <script>
-import addUserDialog from '../../components/addUserDialog'
+import addUserDialog from "../../components/addUserDialog";
 export default {
-  components:{
+  components: {
     addUserDialog
   },
   data() {
@@ -133,29 +139,24 @@ export default {
           address: "上海市普陀区金沙江路 1516 弄"
         }
       ],
-      currentPage4:1
+      currentPage4: 1
     };
   },
-  computed:{
-    clientHeight () {
-      return `${document.documentElement.clientHeight - 290}px`
+  computed: {
+    clientHeight() {
+      return `${document.documentElement.clientHeight - 290}px`;
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     add() {
-      this.$refs['diaLog'].dialogVisible = true;
+      this.$refs["diaLog"].dialogVisible = true;
     },
     handlerSearch(val) {
       debugger;
     },
-    handleSizeChange() {
-
-    },
-    handleCurrentChange () {
-
-    }
+    handleSizeChange() {},
+    handleCurrentChange() {}
   }
 };
 </script>
@@ -175,7 +176,7 @@ export default {
   }
   .el-row:last-child {
     position: relative;
-        height: calc(100% - 40px);
+    height: calc(100% - 40px);
     .el-col:last-child {
       position: absolute;
       bottom: 0;
