@@ -2,7 +2,7 @@
   <div class="userManage">
     <el-row>
       <el-col :span="12">
-        <el-button>增加</el-button>
+        <el-button @click="add">增加</el-button>
       </el-col>
       <el-col :span="12">
         <el-input
@@ -33,11 +33,16 @@
         ></el-pagination>
       </el-col>
     </el-row>
+    <addUserDialog ref="diaLog" title="新增用户"></addUserDialog>
   </div>
 </template>
 
 <script>
+import addUserDialog from '../../components/addUserDialog'
 export default {
+  components:{
+    addUserDialog
+  },
   data() {
     return {
       searchInfo: "",
@@ -139,6 +144,9 @@ export default {
   mounted() {
   },
   methods: {
+    add() {
+      this.$refs['diaLog'].dialogVisible = true;
+    },
     handlerSearch(val) {
       debugger;
     },
